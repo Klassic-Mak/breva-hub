@@ -126,7 +126,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                 child: SingleChildScrollView(
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.end,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const SizedBox(height: 100),
                       // Carousel Image UI from details2.dart
@@ -226,7 +226,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                               Text(
                                 vendor["name"] ?? "Unknown Vendor",
                                 style: const TextStyle(
-                                  fontSize: 30,
+                                  fontSize: 23,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
@@ -241,24 +241,19 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                               ),
                             ],
                           ),
-                          RichText(
-                            text: TextSpan(
-                              style:
-                                  const TextStyle(fontWeight: FontWeight.bold),
-                              children: [
-                                TextSpan(
-                                  text: vendor["loactionUrl"] ?? "",
-                                  style: const TextStyle(
-                                    fontSize: 15,
-                                    color: Colors.black,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
                         ],
                       ),
-                      const SizedBox(height: 35),
+                      const SizedBox(height: 15),
+                      Text(
+                        " Price Range: ${vendor["loactionUrl"] ?? "N/A"}",
+                        style: const TextStyle(
+                          fontSize: 18,
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+
+                      const SizedBox(height: 20),
                       // Info icons row
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,

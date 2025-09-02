@@ -2,6 +2,7 @@
 
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter_ui_design/consts.dart';
 import 'package:flutter_ui_design/models/resaturant.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_ui_design/pages/food_detail_screen.dart';
@@ -27,7 +28,7 @@ class _FoodDeliveryHomeScreenState extends State<FoodDeliveryHomeScreen> {
   Future<void> fetchRestaurants() async {
     debugPrint('Starting fetchRestaurants...');
     try {
-      final url = 'http://10.0.2.2:8080/api/v1/vendors/all';
+      final url = '$baseURL/vendors/all';
       debugPrint('Requesting: $url');
       final response = await http.get(Uri.parse(url));
       debugPrint('Response status: ${response.statusCode}');
@@ -69,64 +70,70 @@ class _FoodDeliveryHomeScreenState extends State<FoodDeliveryHomeScreen> {
               child: CircularProgressIndicator(
               strokeWidth: 1.5,
             ))
-          : SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 27,
-                      vertical: 20,
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        appBanners(),
-                        const SizedBox(height: 35),
-                        const Text(
-                          "Categories",
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black,
-                          ),
-                        ),
-                        const SizedBox(height: 10),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(height: 20),
-                  viewAll(),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: GridView.builder(
-                      shrinkWrap: true,
-                      physics: NeverScrollableScrollPhysics(),
-                      itemCount: restaurants.length,
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        mainAxisSpacing: 20,
-                        crossAxisSpacing: 20,
-                        childAspectRatio: 0.65,
+          : RefreshIndicator(
+              onRefresh: fetchRestaurants,
+              child: SingleChildScrollView(
+                physics: const AlwaysScrollableScrollPhysics(),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 27,
+                        vertical: 20,
                       ),
-                      itemBuilder: (context, index) {
-                        return GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (_) => FoodDetailScreen(
-                                  vendorId: restaurants[index].id,
-                                ),
-                              ),
-                            );
-                          },
-                          child: RestaurantCard(restaurant: restaurants[index]),
-                        );
-                      },
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          appBanners(),
+                          const SizedBox(height: 35),
+                          const Text(
+                            "Categories",
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black,
+                            ),
+                          ),
+                          const SizedBox(height: 10),
+                        ],
+                      ),
                     ),
-                  ),
-                ],
+                    const SizedBox(height: 20),
+                    viewAll(),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      child: GridView.builder(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount: restaurants.length,
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          mainAxisSpacing: 20,
+                          crossAxisSpacing: 20,
+                          childAspectRatio: 0.65,
+                        ),
+                        itemBuilder: (context, index) {
+                          return GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (_) => FoodDetailScreen(
+                                    vendorId: restaurants[index].id,
+                                  ),
+                                ),
+                              );
+                            },
+                            child:
+                                RestaurantCard(restaurant: restaurants[index]),
+                          );
+                        },
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
       bottomNavigationBar: Container(
