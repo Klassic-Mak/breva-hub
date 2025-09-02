@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ui_design/consts.dart';
-import 'package:flutter_ui_design/models/product_model.dart';
+import 'package:flutter_ui_design/models/resaturant.dart';
 
 class ProductsItemsDisplay extends StatelessWidget {
-  final FoodModel foodModel;
+  final Restaurant foodModel;
   const ProductsItemsDisplay({super.key, required this.foodModel});
 
   @override
@@ -33,14 +33,11 @@ class ProductsItemsDisplay extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Hero(
-                tag: foodModel.imageCard,
-                child: Image.asset(
-                  foodModel.imageCard,
-                  height: 110,
-                  width: 150,
-                  fit: BoxFit.fill,
-                ),
+              Image.asset(
+                foodModel.images[0],
+                height: 110,
+                width: 150,
+                fit: BoxFit.fill,
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 15),
@@ -55,7 +52,7 @@ class ProductsItemsDisplay extends StatelessWidget {
                 ),
               ),
               Text(
-                foodModel.specialItems,
+                "Local Cuisine",
                 style: TextStyle(
                   height: 0.1,
                   letterSpacing: 1.1,
@@ -70,15 +67,8 @@ class ProductsItemsDisplay extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                   ),
                   children: [
-                    const TextSpan(
-                      text: "\$",
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: red,
-                      ),
-                    ),
                     TextSpan(
-                      text: "${foodModel.price}",
+                      text: "${foodModel.locationUrl}",
                       style: const TextStyle(
                         fontSize: 25,
                         color: Colors.black,

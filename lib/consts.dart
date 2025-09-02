@@ -6,3 +6,5 @@ const grey = Color(0xFFdadbdb);
 const red = Color(0xFFf54748);
 const imageBackground = Color(0xFFffeecb);
 const imageBackground2 = Color(0xFFf8e0b1);
+
+const String baseURL = "https://food-app-hx7u.onrender.com/api/v1";
